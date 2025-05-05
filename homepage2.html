@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lucid Logs</title>
+    <link rel="icon" href="tittle..jpg" type="image/x-icon">
+    <link rel="stylesheet" href="home_styles.css">
+</head>
+<body>
+    <header>
+        <div class="logo-container">
+            <img src="logo.jpg" alt="Lucid Logs Logo" class="logo">
+            <h1>Lucid Logs</h1>
+        </div>
+        <nav>
+            <a href="homepage2.html">Home</a>
+            <a href="new_journal.html">Create New Journal</a>
+            <a href="view_journals.html">View Existing Journals</a>
+        </nav>
+    </header>
+    <div class="content">
+        <h2>Welcome to Lucid Logs</h2>
+        <p>Capture your journey</p>
+        <a href="new_journal.html"><button>Create New Journal</button></a>
+        <a href="view_journals.html"><button>View Existing Journals</button></a>
+    </div>
+    <div class="sidebar">
+        <div class="user-profile">
+            <img src="user.png" alt="User Profile Picture">
+            <p id="username"></p>
+        </div>
+        <ul class="user-links">
+            <li><a href="#">Profile</a></li>
+            <li><a href="#">Settings</a></li>
+            <li><a href="#" onclick="logout()">Log Out</a></li>
+        </ul>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            
+            const userEmail = localStorage.getItem('userEmail');
+            if (userEmail) {
+                document.getElementById('username').textContent = userEmail;
+            }
+        });
+
+        function logout() {
+            localStorage.removeItem('userEmail');
+            window.location.href = 'login.html';
+        }
+    </script>
+</body>
+</html>

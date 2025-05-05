@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lucid Logs Login</title>
+  <link rel="icon" href="tittle.jpg" type="image/x-icon">
+  <link rel="stylesheet" href="loginstyle.css">
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
+    import { getDatabase, ref, get, set } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-database.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyAU9jk-aHcO6ZojL7VYjUdE81RSuR0RD8M",
+      authDomain: "journal-e16a8.firebaseapp.com",
+      databaseURL: "https://journal-e16a8-default-rtdb.asia-southeast1.firebasedatabase.app",
+      projectId: "journal-e16a8",
+      storageBucket: "journal-e16a8.appspot.com",
+      messagingSenderId: "415947700087",
+      appId: "1:415947700087:web:f86f3c5aaae88e86c9d372",
+      measurementId: "G-CSBZMGZTGP"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const database = getDatabase(app);
+
+    function encodeEmail(email) {
+      return email.split('@')[0].replace(/[.#$[\]/]/g, '_'); // Replace invalid characters
+    }
+
+    async function loginUser(event) {
+      event.preventDefault();
+      const email = document.getElementById('login-email').value;
+      const password = document.getElementById('login-password').value;
+      const encodedEmail = encodeEmail(email);
+
+      try {
+        const dbRef = ref(database, `users/${encodedEmail}`);
+        const snapshot = await get(dbRef);
+
+        if (snapshot.exists()) {
+          const userData = snapshot.val();
+          if (userData.password === password) {
+            console.log("Login successful:", userData);
+            localStorage.setItem('userEmail', email);
+            window.location.href = 'homepage2.html';
+          } else {
+            alert("Incorrect password");
+          }
+        } else {
+          alert("User not found");
+        }
+      } catch (error) {
+        console.error("Error logging in:", error);
+        alert(`Error: ${error.message}`);
+      }
+    }
+
+    async function signUpUser(event) {
+      event.preventDefault();
+      const email = document.getElementById('signup-email').value;
+      const password = document.getElementById('signup-password').value;
+      const encodedEmail = encodeEmail(email);
+
+      try {
+        const dbRef = ref(database, `users/${encodedEmail}`);
+        const snapshot = await get(dbRef);
+
+        if (snapshot.exists()) {
+          alert("User already exists");
+        } else {
+          await set(dbRef, {
+            email: email,
+            password: password
+          });
+          console.log("Sign-up successful");
+          alert('User created successfully. You can now log in.');
+          toggleForms();
+        }
+      } catch (error) {
+        console.error("Error signing up:", error);
+        alert(`Error: ${error.message}`);
+      }
+    }
+
+    function toggleForms() {
+      const loginForm = document.querySelector('.login');
+      const signUpForm = document.querySelector('.signup');
+      const toggleButton = document.getElementById('toggle-button');
+
+      if (loginForm.classList.contains('active')) {
+        loginForm.classList.remove('active');
+        signUpForm.classList.add('active');
+        toggleButton.textContent = 'Already have an account? Log In';
+      } else {
+        loginForm.classList.add('active');
+        signUpForm.classList.remove('active');
+        toggleButton.textContent = "Don't have an account? Sign Up";
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+      const loginForm = document.querySelector('.login');
+      const signUpForm = document.querySelector('.signup');
+      const toggleButton = document.getElementById('toggle-button');
+
+      loginForm.addEventListener('submit', loginUser);
+      signUpForm.addEventListener('submit', signUpUser);
+      toggleButton.addEventListener('click', toggleForms);
+
+      loginForm.classList.add('active');
+      signUpForm.classList.remove('active');
+    });
+  </script>
+</head>
+
+<body>
+  <div class="container">
+    <div class="screen">
+      <div class="screen__content">
+        <!-- Logo -->
+        <div class="logo">
+          <img src="logo.jpg" alt="Logo" class="logo__image">
+        </div>
+
+        <!-- Login Form -->
+        <form class="login">
+          <div class="login__field">
+            <i class="login__icon fas fa-user"></i>
+            <input type="text" id="login-email" class="login__input" placeholder="Email" required>
+          </div>
+          <div class="login__field">
+            <i class="login__icon fas fa-lock"></i>
+            <input type="password" id="login-password" class="login__input" placeholder="Password" required>
+          </div>
+          <button type="submit" class="button login__submit">
+            <span class="button__text">Log In Now</span>
+            <i class="button__icon fas fa-chevron-right"></i>
+          </button>
+        </form>
+
+        <!-- Sign-Up Form -->
+        <form class="signup">
+          <div class="login__field">
+            <i class="login__icon fas fa-user"></i>
+            <input type="text" id="signup-email" class="login__input" placeholder="Email" required>
+          </div>
+          <div class="login__field">
+            <i class="login__icon fas fa-lock"></i>
+            <input type="password" id="signup-password" class="login__input" placeholder="Password" required>
+          </div>
+          <button type="submit" class="button login__submit">
+            <span class="button__text">Sign Up Now</span>
+            <i class="button__icon fas fa-chevron-right"></i>
+          </button>
+        </form>
+
+        <!-- Toggle Button -->
+        <button id="toggle-button" class="togglebutton">
+          Don't have an account? Sign Up
+        </button>
+      </div>
+      <div class="screen__background">
+        <span class="screen__background__shape screen__background__shape4"></span>
+        <span class="screen__background__shape screen__background__shape3"></span>
+        <span class="screen__background__shape screen__background__shape2"></span>
+        <span class="screen__background__shape screen__background__shape1"></span>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>
