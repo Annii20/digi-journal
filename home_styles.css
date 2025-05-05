@@ -1,0 +1,168 @@
+body {
+    font-family: 'Montserrat', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f9;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+.logo
+{
+    width: 10%;
+    border-radius: 20%;
+    border-color: #a66cd4;
+}
+
+header {
+    background-color: #7B2CBF;
+    padding: 20px;
+    text-align: center;
+    color: #fff;
+    animation: fadeInDown 0.5s;
+}
+
+nav {
+    margin-top: 10px;
+}
+
+nav a {
+    margin-right: 20px;
+    text-decoration: none;
+    color: #fff;
+    font-weight: bold;
+}
+
+.content {
+    flex: 1;
+    padding: 20px;
+    margin-right: 270px;
+}
+
+.content h2 {
+    color: #7B2CBF;
+    animation: fadeInUp 0.5s;
+}
+
+.content p {
+    margin-bottom: 20px;
+    font-size: 18px;
+}
+
+.content a {
+    text-decoration: none;
+}
+
+.content button {
+    background-color: #9D4EDD;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    margin: 10px 0;
+    cursor: pointer;
+    border-radius: 20px; 
+    font-size: 16px;
+    transition: background-color 0.3s, transform 0.3s;
+    animation: fadeInUp 1.2s;
+}
+
+.content button:hover {
+    background-color: #5A189A;
+    transform: scale(1.05);
+}
+
+.sidebar {
+    background-color: #fff;
+    padding: 20px;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 250px;
+    box-shadow: -2px 0 5px rgba(0,0,0,0.1);
+    animation: fadeInRight 0.5s; 
+}
+
+.user-profile {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.user-profile img {
+    width: 100px;
+    border-radius: 30%;
+    border: 2px solid #7B2CBF;
+}
+
+.user-links {
+    list-style: none;
+    padding: 0;
+}
+
+.user-links li {
+    margin-bottom: 10px;
+}
+
+.user-links a {
+    text-decoration: none;
+    color: #7B2CBF;
+    font-weight: bold;
+    display: block;
+    padding: 10px;
+    border-radius: 20px; 
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.user-links a:hover {
+    background-color: #e4d8fa;
+    transform: scale(1.05);
+}
+
+
+@media (max-width: 768px) {
+    .content {
+        margin-right: 0;
+    }
+    .sidebar {
+        width: 100%;
+        position: relative;
+        bottom: auto;
+        right: auto;
+        box-shadow: none;
+        border-radius: 0; /* Remove squircle effect for mobile */
+    }
+}
+
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInRight {
+    from {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
